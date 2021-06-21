@@ -8,6 +8,7 @@ function App() {
   // Definir el state
   const [busquedaletra, setBusquedaletra] = useState({});
   const [letra, setLetra] = useState('');
+  const [informacion, setInformacion] = useState('');
 
   useEffect(() => {
     if (Object.keys(busquedaletra).length === 0) return;
@@ -15,10 +16,17 @@ function App() {
     async function consultarApiLetra() {
       const { artista, cancion } = busquedaletra;
       const url = `https://api.lyrics.ovh/v1/{artista}/${cancion}`;
+      const url2 = `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artista}`;
 
-      const resultado = await axios(url);
+      // const [letra, informacion] = await Promise.all([axios(url), axios(url2)]);
 
-      setLetra(resultado.data.lyrics);
+      const resultado = await axios(url2);
+
+      console.log(resultado);
+
+      // setLetra(resultado.data.lyrics);
+      setInformacion(resultado.data.artists[0]);
+      console.log(resultado.data.artists[0]);
     }
 
     consultarApiLetra();
