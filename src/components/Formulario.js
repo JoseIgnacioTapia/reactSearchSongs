@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Formulario = () => {
+const Formulario = ({ setBusquedaletra }) => {
   const [busqueda, setBusqueda] = useState({
     cancion: '',
     artista: '',
@@ -27,11 +27,17 @@ const Formulario = () => {
     setError(false);
 
     // Todo bien pasar información al Componente Principal
+    setBusquedaletra(busqueda);
   }
 
   return (
     <div className="bg-info">
       <div className="container">
+        {error ? (
+          <p className="alert alert-danger text-center p-2">
+            Todos los campos son obligatorios
+          </p>
+        ) : null}
         <div className="row">
           <form
             onSubmit={buscarInformacion}
