@@ -16,18 +16,21 @@ function App() {
 
     async function consultarApiLetra() {
       const { artista, cancion } = busquedaletra;
-      const url = `https://api.lyrics.ovh/v1/{artista}/${cancion}`;
+      const key = '9f303e03a576567144845145e6dfee91';
+      const url = `https://api.vagalume.com.br/search.php?art=${artista}&mus=${cancion}&apikey=${key}`;
       const url2 = `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artista}`;
 
-      // const [letra, informacion] = await Promise.all([axios(url), axios(url2)]);
+      const [letra, informacion] = await Promise.all([axios(url), axios(url2)]);
+      console.log(letra.data.mus[0].text);
+      console.log(informacion.data.artists[0]);
 
-      const resultado = await axios(url2);
+      // const resultado = await axios(url2);
 
-      console.log(resultado);
+      // console.log(resultado);
 
-      // setLetra(resultado.data.lyrics);
-      setInformacion(resultado.data.artists[0]);
-      console.log(resultado.data.artists[0]);
+      setLetra(letra.data.mus[0].text);
+      setInformacion(informacion.data.artists[0]);
+      // console.log(resultado.data.artists[0]);
     }
 
     consultarApiLetra();
